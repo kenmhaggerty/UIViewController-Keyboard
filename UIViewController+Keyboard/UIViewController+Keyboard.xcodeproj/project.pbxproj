@@ -1,0 +1,492 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7DCBD6EE18E60FA300C677BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DCBD6ED18E60FA300C677BE /* Foundation.framework */; };
+		7DCBD6F018E60FA300C677BE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DCBD6EF18E60FA300C677BE /* CoreGraphics.framework */; };
+		7DCBD6F218E60FA300C677BE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DCBD6F118E60FA300C677BE /* UIKit.framework */; };
+		7DCBD6F818E60FA300C677BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DCBD6F618E60FA300C677BE /* InfoPlist.strings */; };
+		7DCBD6FA18E60FA300C677BE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DCBD6F918E60FA300C677BE /* main.m */; };
+		7DCBD6FE18E60FA300C677BE /* KHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DCBD6FD18E60FA300C677BE /* KHAppDelegate.m */; };
+		7DCBD70118E60FA300C677BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DCBD6FF18E60FA300C677BE /* Main.storyboard */; };
+		7DCBD70418E60FA300C677BE /* KHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DCBD70318E60FA300C677BE /* KHViewController.m */; };
+		7DCBD70618E60FA300C677BE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DCBD70518E60FA300C677BE /* Images.xcassets */; };
+		7DCBD70D18E60FA300C677BE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DCBD70C18E60FA300C677BE /* XCTest.framework */; };
+		7DCBD70E18E60FA300C677BE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DCBD6ED18E60FA300C677BE /* Foundation.framework */; };
+		7DCBD70F18E60FA300C677BE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DCBD6F118E60FA300C677BE /* UIKit.framework */; };
+		7DCBD71718E60FA300C677BE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DCBD71518E60FA300C677BE /* InfoPlist.strings */; };
+		7DCBD71918E60FA300C677BE /* UIViewController_KeyboardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DCBD71818E60FA300C677BE /* UIViewController_KeyboardTests.m */; };
+		7DCBD72518E6119A00C677BE /* UIViewController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DCBD72418E6119A00C677BE /* UIViewController+Keyboard.m */; };
+		7DCBD72818E611FD00C677BE /* AKSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DCBD72718E611FD00C677BE /* AKSystemInfo.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7DCBD71018E60FA300C677BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7DCBD6E218E60FA300C677BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7DCBD6E918E60FA300C677BE;
+			remoteInfo = "UIViewController+Keyboard";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7DCBD6EA18E60FA300C677BE /* UIViewController+Keyboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "UIViewController+Keyboard.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DCBD6ED18E60FA300C677BE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7DCBD6EF18E60FA300C677BE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7DCBD6F118E60FA300C677BE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7DCBD6F518E60FA300C677BE /* UIViewController+Keyboard-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIViewController+Keyboard-Info.plist"; sourceTree = "<group>"; };
+		7DCBD6F718E60FA300C677BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7DCBD6F918E60FA300C677BE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7DCBD6FB18E60FA300C677BE /* UIViewController+Keyboard-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Keyboard-Prefix.pch"; sourceTree = "<group>"; };
+		7DCBD6FC18E60FA300C677BE /* KHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHAppDelegate.h; sourceTree = "<group>"; };
+		7DCBD6FD18E60FA300C677BE /* KHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHAppDelegate.m; sourceTree = "<group>"; };
+		7DCBD70018E60FA300C677BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7DCBD70218E60FA300C677BE /* KHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHViewController.h; sourceTree = "<group>"; };
+		7DCBD70318E60FA300C677BE /* KHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHViewController.m; sourceTree = "<group>"; };
+		7DCBD70518E60FA300C677BE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7DCBD70B18E60FA300C677BE /* UIViewController+KeyboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "UIViewController+KeyboardTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DCBD70C18E60FA300C677BE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		7DCBD71418E60FA300C677BE /* UIViewController+KeyboardTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIViewController+KeyboardTests-Info.plist"; sourceTree = "<group>"; };
+		7DCBD71618E60FA300C677BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7DCBD71818E60FA300C677BE /* UIViewController_KeyboardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIViewController_KeyboardTests.m; sourceTree = "<group>"; };
+		7DCBD72318E6119A00C677BE /* UIViewController+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Keyboard.h"; sourceTree = "<group>"; };
+		7DCBD72418E6119A00C677BE /* UIViewController+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Keyboard.m"; sourceTree = "<group>"; };
+		7DCBD72618E611FD00C677BE /* AKSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSystemInfo.h; sourceTree = "<group>"; };
+		7DCBD72718E611FD00C677BE /* AKSystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSystemInfo.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7DCBD6E718E60FA300C677BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DCBD6F018E60FA300C677BE /* CoreGraphics.framework in Frameworks */,
+				7DCBD6F218E60FA300C677BE /* UIKit.framework in Frameworks */,
+				7DCBD6EE18E60FA300C677BE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DCBD70818E60FA300C677BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DCBD70D18E60FA300C677BE /* XCTest.framework in Frameworks */,
+				7DCBD70F18E60FA300C677BE /* UIKit.framework in Frameworks */,
+				7DCBD70E18E60FA300C677BE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7DCBD6E118E60FA300C677BE = {
+			isa = PBXGroup;
+			children = (
+				7DCBD6F318E60FA300C677BE /* UIViewController+Keyboard */,
+				7DCBD71218E60FA300C677BE /* UIViewController+KeyboardTests */,
+				7DCBD6EC18E60FA300C677BE /* Frameworks */,
+				7DCBD6EB18E60FA300C677BE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7DCBD6EB18E60FA300C677BE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7DCBD6EA18E60FA300C677BE /* UIViewController+Keyboard.app */,
+				7DCBD70B18E60FA300C677BE /* UIViewController+KeyboardTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7DCBD6EC18E60FA300C677BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7DCBD6ED18E60FA300C677BE /* Foundation.framework */,
+				7DCBD6EF18E60FA300C677BE /* CoreGraphics.framework */,
+				7DCBD6F118E60FA300C677BE /* UIKit.framework */,
+				7DCBD70C18E60FA300C677BE /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7DCBD6F318E60FA300C677BE /* UIViewController+Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				7DCBD72318E6119A00C677BE /* UIViewController+Keyboard.h */,
+				7DCBD72418E6119A00C677BE /* UIViewController+Keyboard.m */,
+				7DCBD72618E611FD00C677BE /* AKSystemInfo.h */,
+				7DCBD72718E611FD00C677BE /* AKSystemInfo.m */,
+				7DCBD72218E60FC400C677BE /* Sample Project */,
+				7DCBD70518E60FA300C677BE /* Images.xcassets */,
+				7DCBD6F418E60FA300C677BE /* Supporting Files */,
+			);
+			path = "UIViewController+Keyboard";
+			sourceTree = "<group>";
+		};
+		7DCBD6F418E60FA300C677BE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7DCBD6F518E60FA300C677BE /* UIViewController+Keyboard-Info.plist */,
+				7DCBD6F618E60FA300C677BE /* InfoPlist.strings */,
+				7DCBD6F918E60FA300C677BE /* main.m */,
+				7DCBD6FB18E60FA300C677BE /* UIViewController+Keyboard-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7DCBD71218E60FA300C677BE /* UIViewController+KeyboardTests */ = {
+			isa = PBXGroup;
+			children = (
+				7DCBD71818E60FA300C677BE /* UIViewController_KeyboardTests.m */,
+				7DCBD71318E60FA300C677BE /* Supporting Files */,
+			);
+			path = "UIViewController+KeyboardTests";
+			sourceTree = "<group>";
+		};
+		7DCBD71318E60FA300C677BE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7DCBD71418E60FA300C677BE /* UIViewController+KeyboardTests-Info.plist */,
+				7DCBD71518E60FA300C677BE /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7DCBD72218E60FC400C677BE /* Sample Project */ = {
+			isa = PBXGroup;
+			children = (
+				7DCBD6FC18E60FA300C677BE /* KHAppDelegate.h */,
+				7DCBD6FD18E60FA300C677BE /* KHAppDelegate.m */,
+				7DCBD6FF18E60FA300C677BE /* Main.storyboard */,
+				7DCBD70218E60FA300C677BE /* KHViewController.h */,
+				7DCBD70318E60FA300C677BE /* KHViewController.m */,
+			);
+			name = "Sample Project";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7DCBD6E918E60FA300C677BE /* UIViewController+Keyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7DCBD71C18E60FA300C677BE /* Build configuration list for PBXNativeTarget "UIViewController+Keyboard" */;
+			buildPhases = (
+				7DCBD6E618E60FA300C677BE /* Sources */,
+				7DCBD6E718E60FA300C677BE /* Frameworks */,
+				7DCBD6E818E60FA300C677BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "UIViewController+Keyboard";
+			productName = "UIViewController+Keyboard";
+			productReference = 7DCBD6EA18E60FA300C677BE /* UIViewController+Keyboard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7DCBD70A18E60FA300C677BE /* UIViewController+KeyboardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7DCBD71F18E60FA300C677BE /* Build configuration list for PBXNativeTarget "UIViewController+KeyboardTests" */;
+			buildPhases = (
+				7DCBD70718E60FA300C677BE /* Sources */,
+				7DCBD70818E60FA300C677BE /* Frameworks */,
+				7DCBD70918E60FA300C677BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7DCBD71118E60FA300C677BE /* PBXTargetDependency */,
+			);
+			name = "UIViewController+KeyboardTests";
+			productName = "UIViewController+KeyboardTests";
+			productReference = 7DCBD70B18E60FA300C677BE /* UIViewController+KeyboardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7DCBD6E218E60FA300C677BE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = KH;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Ken M. Haggerty";
+				TargetAttributes = {
+					7DCBD70A18E60FA300C677BE = {
+						TestTargetID = 7DCBD6E918E60FA300C677BE;
+					};
+				};
+			};
+			buildConfigurationList = 7DCBD6E518E60FA300C677BE /* Build configuration list for PBXProject "UIViewController+Keyboard" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7DCBD6E118E60FA300C677BE;
+			productRefGroup = 7DCBD6EB18E60FA300C677BE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7DCBD6E918E60FA300C677BE /* UIViewController+Keyboard */,
+				7DCBD70A18E60FA300C677BE /* UIViewController+KeyboardTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7DCBD6E818E60FA300C677BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DCBD70618E60FA300C677BE /* Images.xcassets in Resources */,
+				7DCBD6F818E60FA300C677BE /* InfoPlist.strings in Resources */,
+				7DCBD70118E60FA300C677BE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DCBD70918E60FA300C677BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DCBD71718E60FA300C677BE /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7DCBD6E618E60FA300C677BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DCBD70418E60FA300C677BE /* KHViewController.m in Sources */,
+				7DCBD72818E611FD00C677BE /* AKSystemInfo.m in Sources */,
+				7DCBD6FA18E60FA300C677BE /* main.m in Sources */,
+				7DCBD6FE18E60FA300C677BE /* KHAppDelegate.m in Sources */,
+				7DCBD72518E6119A00C677BE /* UIViewController+Keyboard.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DCBD70718E60FA300C677BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DCBD71918E60FA300C677BE /* UIViewController_KeyboardTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7DCBD71118E60FA300C677BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7DCBD6E918E60FA300C677BE /* UIViewController+Keyboard */;
+			targetProxy = 7DCBD71018E60FA300C677BE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7DCBD6F618E60FA300C677BE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7DCBD6F718E60FA300C677BE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7DCBD6FF18E60FA300C677BE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7DCBD70018E60FA300C677BE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7DCBD71518E60FA300C677BE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7DCBD71618E60FA300C677BE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7DCBD71A18E60FA300C677BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7DCBD71B18E60FA300C677BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7DCBD71D18E60FA300C677BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UIViewController+Keyboard/UIViewController+Keyboard-Prefix.pch";
+				INFOPLIST_FILE = "UIViewController+Keyboard/UIViewController+Keyboard-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7DCBD71E18E60FA300C677BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UIViewController+Keyboard/UIViewController+Keyboard-Prefix.pch";
+				INFOPLIST_FILE = "UIViewController+Keyboard/UIViewController+Keyboard-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		7DCBD72018E60FA300C677BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UIViewController+Keyboard.app/UIViewController+Keyboard";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UIViewController+Keyboard/UIViewController+Keyboard-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "UIViewController+KeyboardTests/UIViewController+KeyboardTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		7DCBD72118E60FA300C677BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/UIViewController+Keyboard.app/UIViewController+Keyboard";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UIViewController+Keyboard/UIViewController+Keyboard-Prefix.pch";
+				INFOPLIST_FILE = "UIViewController+KeyboardTests/UIViewController+KeyboardTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7DCBD6E518E60FA300C677BE /* Build configuration list for PBXProject "UIViewController+Keyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DCBD71A18E60FA300C677BE /* Debug */,
+				7DCBD71B18E60FA300C677BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7DCBD71C18E60FA300C677BE /* Build configuration list for PBXNativeTarget "UIViewController+Keyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DCBD71D18E60FA300C677BE /* Debug */,
+				7DCBD71E18E60FA300C677BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		7DCBD71F18E60FA300C677BE /* Build configuration list for PBXNativeTarget "UIViewController+KeyboardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DCBD72018E60FA300C677BE /* Debug */,
+				7DCBD72118E60FA300C677BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7DCBD6E218E60FA300C677BE /* Project object */;
+}
