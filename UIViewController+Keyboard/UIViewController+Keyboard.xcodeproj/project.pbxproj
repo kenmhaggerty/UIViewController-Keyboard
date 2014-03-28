@@ -55,8 +55,8 @@
 		7DCBD71418E60FA300C677BE /* UIViewController+KeyboardTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UIViewController+KeyboardTests-Info.plist"; sourceTree = "<group>"; };
 		7DCBD71618E60FA300C677BE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7DCBD71818E60FA300C677BE /* UIViewController_KeyboardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIViewController_KeyboardTests.m; sourceTree = "<group>"; };
-		7DCBD72318E6119A00C677BE /* UIViewController+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Keyboard.h"; sourceTree = "<group>"; };
-		7DCBD72418E6119A00C677BE /* UIViewController+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Keyboard.m"; sourceTree = "<group>"; };
+		7DCBD72318E6119A00C677BE /* UIViewController+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+Keyboard.h"; path = "../UIViewController+Keyboard.h"; sourceTree = "<group>"; };
+		7DCBD72418E6119A00C677BE /* UIViewController+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+Keyboard.m"; path = "../UIViewController+Keyboard.m"; sourceTree = "<group>"; };
 		7DCBD72618E611FD00C677BE /* AKSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AKSystemInfo.h; sourceTree = "<group>"; };
 		7DCBD72718E611FD00C677BE /* AKSystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AKSystemInfo.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
