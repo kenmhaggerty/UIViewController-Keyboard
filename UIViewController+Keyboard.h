@@ -3,7 +3,7 @@
 //  UIViewController+Keyboard
 //
 //  Created by Ken M. Haggerty on 10/9/13.
-//  Copyright (c) 2013 Ken M. Haggerty All rights reserved.
+//  Copyright (c) 2015 Ken M. Haggerty All rights reserved.
 //
 //  For full copyright and license information, please view the LICENSE
 //  file that was distributed with this source code.
