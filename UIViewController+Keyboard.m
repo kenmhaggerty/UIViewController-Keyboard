@@ -270,43 +270,7 @@ static char tapGestureRecognizerKey;
 
 #pragma mark - // DELEGATED METHODS (UITextFieldDelegate) //
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    if (self.useDefaultKeyboardToolbar)
-    {
-        self.defaultKeyboardToolbar; // this is bad code but necessary to work, needs fix
-        [textField performSelector:@selector(setInputAccessoryView:) withObject:self.defaultKeyboardToolbar];
-    }
-    else if (self.keyboardToolbar)
-    {
-        self.keyboardToolbar; // this is bad code but necessary to work, needs fix
-        [textField performSelector:@selector(setInputAccessoryView:) withObject:self.keyboardToolbar];
-    }
-    return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    [self scrollToView:textField animated:YES];
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    return YES;
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    [textField resignFirstResponder];
-}
+s
 
 #pragma mark - // DELEGATED METHODS (UITextViewDelegate) //
 
@@ -447,7 +411,7 @@ static char tapGestureRecognizerKey;
     {
         NSTimeInterval animationDuration = 0.0;
         [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
-        [UIView animateWithDuration:animationDuration animations:^{
+        [UIView animateWithDuration:animationDuration animation s:^{
             [self.scrollView setContentInset:self.scrollViewContentInset];
         } completion:^(BOOL finished){
             [self setScrollViewContentInset:UIEdgeInsetsZero];
