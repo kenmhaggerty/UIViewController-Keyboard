@@ -2,26 +2,11 @@
 //  UIViewController+Keyboard.h
 //  UIViewController+Keyboard
 //
-//  Created by Ken M. Haggerty on 10/9/13.
-//  Copyright (c) 2015 Ken M. Haggerty All rights reserved.
-//
-//  For full copyright and license information, please view the LICENSE
-//  file that was distributed with this source code.
+//  Created by Ken M. Haggerty on 9/1/15.
+//  Copyright (c) 2015 Eureka Valley Co. All rights reserved.
 //
 
 #pragma mark - // NOTES (Public) //
-
-// SUMMARY:
-// This category for UIViewController manages display of an on-screen keyboard.
-//
-// NOTES:
-// • scrollView contains scrollable contents accessible when the keyboard is displayed. If scrollView is nil, the category will not be able to adjust content automatically so that it remains visible and accessible while the keyboard is displayed.
-// • activeView is a read-only convenience property that makes getting the current first responder easy.
-// • keyboardToolbar allows the developer to set and store a desired custom inputAccessoryView for the first responder to use if the first responder does not already have an associated inputAccessoryView set.
-// • useDefaultKeyboardToolbar allows the developer to fall back on a default "tap to dismiss" inputAccessoryView if the first responder does not have an associated inputAccessoryView and if keyboardToolbar is nil.
-//
-// OTHER:
-// Please remember to call -[registerForKeyboardNotifications] and -[unregisterForKeyboardNotifications] in your UIViewController setup and teardown.
 
 #pragma mark - // IMPORTS (Public) //
 
@@ -31,13 +16,20 @@
 
 #pragma mark - // DEFINITIONS (Public) //
 
-@interface UIViewController (Keyboard) <UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, UISearchBarDelegate>
-@property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, retain) UIView *keyboardToolbar;
+@interface UIViewController (Keyboard)
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) UIView *keyboardToolbar;
+@property (nonatomic) CGSize scrollPadding;
 @property (nonatomic) BOOL useDefaultKeyboardToolbar;
-@property (nonatomic) CGSize scrollToViewPadding;
-- (void)registerForKeyboardNotifications;
-- (void)unregisterForKeyboardNotifications;
+- (void)addObserversToKeyboard;
+- (void)removeObserversFromKeyboard;
 - (void)scrollToView:(UIView *)view animated:(BOOL)animated;
-- (UIView *)getFirstResponder;
+
+- (void)setKeyboardWillAppear:(void (^)(CGRect, NSTimeInterval))keyboardWillAppear;
+- (void)setKeyboardDidAppear:(void (^)(CGRect))keyboardDidAppear;
+- (void)setKeyboardWillDisappear:(void (^)(NSTimeInterval))keyboardWillDisappear;
+- (void)setKeyboardDidDisappear:(void (^)(void))keyboardDidDisappear;
+- (void)setKeyboardFrameWillChange:(void (^)(CGRect, NSTimeInterval))keyboardFrameDidChange;
+- (void)setKeyboardFrameDidChange:(void (^)(CGRect))keyboardFrameDidChange;
+
 @end

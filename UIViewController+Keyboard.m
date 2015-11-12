@@ -2,11 +2,8 @@
 //  UIViewController+Keyboard.m
 //  UIViewController+Keyboard
 //
-//  Created by Ken M. Haggerty on 10/9/13.
-//  Copyright (c) 2015 Ken M. Haggerty All rights reserved.
-//
-//  For full copyright and license information, please view the LICENSE
-//  file that was distributed with this source code.
+//  Created by Ken M. Haggerty on 9/1/15.
+//  Copyright (c) 2015 Eureka Valley Co. All rights reserved.
 //
 
 #pragma mark - // NOTES (Private) //
@@ -17,7 +14,6 @@
 #import "AKDebugger.h"
 #import "AKGenerics.h"
 #import <objc/runtime.h>
-#import "AKSystemInfo.h"
 
 #pragma mark - // DEFINITIONS (Private) //
 
@@ -35,130 +31,120 @@
 #define DEFAULT_SCROLLING_PADDING_HORIZONTAL 0.0
 #define DEFAULT_SCROLLING_PADDING_VERTICAL 5.0
 
-static char scrollViewKey;
-static char keyboardToolbarKey;
-static char useDefaultKeyboardToolbarKey;
-static char scrollToViewPaddingKey;
-static char scrollViewContentInsetKey;
-static char scrollViewScrollIndicatorInsetsKey;
-static char defaultKeyboardToolbarKey;
-static char tapGestureRecognizerKey;
-
 @implementation UIViewController (Keyboard)
 
 #pragma mark - // SETTERS AND GETTERS //
 
 - (void)setScrollView:(UIScrollView *)scrollView
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    [scrollView setClipsToBounds:NO];
-    objc_setAssociatedObject(self, &scrollViewKey, scrollView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(scrollView), scrollView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIScrollView *)scrollView
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-	return objc_getAssociatedObject(self, &scrollViewKey);
+    return objc_getAssociatedObject(self, @selector(scrollView));
 }
 
 - (void)setKeyboardToolbar:(UIView *)keyboardToolbar
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    objc_setAssociatedObject(self, &keyboardToolbarKey, keyboardToolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(keyboardToolbar), keyboardToolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIView *)keyboardToolbar
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-	return objc_getAssociatedObject(self, &keyboardToolbarKey);
+    return objc_getAssociatedObject(self, @selector(keyboardToolbar));
+}
+
+- (void)setScrollPadding:(CGSize)scrollPadding
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
+    
+    objc_setAssociatedObject(self, @selector(scrollPadding), [NSValue valueWithCGSize:scrollPadding], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGSize)scrollPadding
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    
+    NSValue *scrollPaddingNSValue = objc_getAssociatedObject(self, @selector(scrollPadding));
+    CGSize scrollPadding = [scrollPaddingNSValue CGSizeValue];
+    if (!scrollPaddingNSValue)
+    {
+        scrollPadding = CGSizeMake(DEFAULT_SCROLLING_PADDING_HORIZONTAL, DEFAULT_SCROLLING_PADDING_VERTICAL);
+        [self setScrollPadding:scrollPadding];
+    }
+    return scrollPadding;
 }
 
 - (void)setUseDefaultKeyboardToolbar:(BOOL)useDefaultKeyboardToolbar
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    objc_setAssociatedObject(self, &useDefaultKeyboardToolbar, [NSNumber numberWithBool:useDefaultKeyboardToolbar], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(useDefaultKeyboardToolbar), [NSNumber numberWithBool:useDefaultKeyboardToolbar], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (BOOL)useDefaultKeyboardToolbar
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-    NSNumber *useDefaultKeyboardToolbarNSNumber = objc_getAssociatedObject(self, &useDefaultKeyboardToolbarKey);
+    NSNumber *useDefaultKeyboardToolbarNSNumber = objc_getAssociatedObject(self, @selector(useDefaultKeyboardToolbar));
     BOOL useDefaultKeyboardToolbar = [useDefaultKeyboardToolbarNSNumber boolValue];
     if (!useDefaultKeyboardToolbarNSNumber)
     {
         useDefaultKeyboardToolbar = DEFAULT_USE_DEFAULT_TOOLBAR;
         [self setUseDefaultKeyboardToolbar:useDefaultKeyboardToolbar];
     }
-	return useDefaultKeyboardToolbar;
-}
-
-- (void)setScrollToViewPadding:(CGSize)scrollToViewPadding
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter customCategories:@[AKD_UI] message:nil];
-    
-    objc_setAssociatedObject(self, &scrollToViewPaddingKey, [NSValue valueWithCGSize:scrollToViewPadding], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGSize)scrollToViewPadding
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
-    
-    NSValue *scrollToViewPaddingNSValue = objc_getAssociatedObject(self, &scrollToViewPaddingKey);
-    CGSize scrollToViewPadding = [scrollToViewPaddingNSValue CGSizeValue];
-    if (!scrollToViewPaddingNSValue)
-    {
-        scrollToViewPadding = CGSizeMake(DEFAULT_SCROLLING_PADDING_HORIZONTAL, DEFAULT_SCROLLING_PADDING_VERTICAL);
-        [self setScrollToViewPadding:scrollToViewPadding];
-    }
-	return scrollToViewPadding;
+    return useDefaultKeyboardToolbar;
 }
 
 - (void)setScrollViewContentInset:(UIEdgeInsets)scrollViewContentInset
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    objc_setAssociatedObject(self, &scrollViewContentInsetKey, [NSValue valueWithUIEdgeInsets:scrollViewContentInset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(scrollViewContentInset), [NSValue valueWithUIEdgeInsets:scrollViewContentInset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIEdgeInsets)scrollViewContentInset
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-	return [objc_getAssociatedObject(self, &scrollViewContentInsetKey) UIEdgeInsetsValue];
+    return [objc_getAssociatedObject(self, @selector(scrollViewContentInset)) UIEdgeInsetsValue];
 }
 
 - (void)setScrollViewScrollIndicatorInsets:(UIEdgeInsets)scrollViewScrollIndicatorInsets
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    objc_setAssociatedObject(self, &scrollViewScrollIndicatorInsetsKey, [NSValue valueWithUIEdgeInsets:scrollViewScrollIndicatorInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(scrollViewScrollIndicatorInsets), [NSValue valueWithUIEdgeInsets:scrollViewScrollIndicatorInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIEdgeInsets)scrollViewScrollIndicatorInsets
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-	return [objc_getAssociatedObject(self, &scrollViewScrollIndicatorInsetsKey) UIEdgeInsetsValue];
+    return [objc_getAssociatedObject(self, @selector(scrollViewScrollIndicatorInsets)) UIEdgeInsetsValue];
 }
 
 - (void)setDefaultKeyboardToolbar:(UIView *)defaultKeyboardToolbar
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    objc_setAssociatedObject(self, &defaultKeyboardToolbarKey, defaultKeyboardToolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(defaultKeyboardToolbar), defaultKeyboardToolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UIView *)defaultKeyboardToolbar
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-    UIView *defaultKeyboardToolbar = objc_getAssociatedObject(self, &defaultKeyboardToolbarKey);
+    UIView *defaultKeyboardToolbar = objc_getAssociatedObject(self, @selector(defaultKeyboardToolbar));
     if (!defaultKeyboardToolbar)
     {
         UIToolbar *defaultKeyboardToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, DEFAULT_TOOLBAR_HEIGHT)];
@@ -167,7 +153,7 @@ static char tapGestureRecognizerKey;
         [labelForToolbar setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
         [labelForToolbar setBackgroundColor:[UIColor clearColor]];
         [labelForToolbar setTextAlignment:NSTextAlignmentCenter];
-        if ([AKSystemInfo iOSVersion] < 7.0)
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
         {
             [defaultKeyboardToolbar setTintColor:DEFAULT_TOOLBAR_COLOR_IOS_6];
             [labelForToolbar setFont:DEFAULT_TOOLBAR_FONT_IOS_6];
@@ -192,16 +178,16 @@ static char tapGestureRecognizerKey;
 
 - (void)setTapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-	objc_setAssociatedObject(self, &tapGestureRecognizerKey, tapGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(tapGestureRecognizer), tapGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (UITapGestureRecognizer *)tapGestureRecognizer
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-    UITapGestureRecognizer *tapGestureRecognizer = objc_getAssociatedObject(self, &tapGestureRecognizerKey);
+    UITapGestureRecognizer *tapGestureRecognizer = objc_getAssociatedObject(self, @selector(tapGestureRecognizer));
     if (!tapGestureRecognizer)
     {
         tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignActiveView)];
@@ -210,186 +196,136 @@ static char tapGestureRecognizerKey;
     return tapGestureRecognizer;
 }
 
+- (void (^)(CGRect, NSTimeInterval))keyboardWillAppear
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    
+    return objc_getAssociatedObject(self, @selector(keyboardWillAppear));
+}
+
+- (void (^)(CGRect))keyboardDidAppear
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    
+    return objc_getAssociatedObject(self, @selector(keyboardDidAppear));
+}
+
+- (void (^)(NSTimeInterval))keyboardWillDisappear
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    
+    return objc_getAssociatedObject(self, @selector(keyboardWillDisappear));
+}
+
+- (void (^)(void))keyboardDidDisappear
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    
+    return objc_getAssociatedObject(self, @selector(keyboardDidDisappear));
+}
+
+- (void (^)(CGRect, NSTimeInterval))keyboardFrameWillChange
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    
+    return objc_getAssociatedObject(self, @selector(keyboardFrameWillChange));
+}
+
+- (void (^)(CGRect))keyboardFrameDidChange
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    
+    return objc_getAssociatedObject(self, @selector(keyboardFrameDidChange));
+}
+
 #pragma mark - // INITS AND LOADS //
 
 #pragma mark - // PUBLIC METHODS //
 
-- (void)registerForKeyboardNotifications
+- (void)addObserversToKeyboard
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillAppear:)
-                                                 name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidAppear:)
-                                                 name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillDisappear:)
-                                                 name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidDisappear:)
-                                                 name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappear:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameWillChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
 }
 
-- (void)unregisterForKeyboardNotifications
+- (void)removeObserversFromKeyboard
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidChangeFrameNotification object:nil];
 }
 
 - (void)scrollToView:(UIView *)view animated:(BOOL)animated
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
-    if ([AKGenerics view:view isEventualSubviewOfView:self.scrollView])
+    if (![AKGenerics view:view isEventualSubviewOfView:self.scrollView])
     {
-        CGRect viewFrameWithPadding = CGRectMake(view.frame.origin.x-self.scrollToViewPadding.width, view.frame.origin.y-self.scrollToViewPadding.height, view.frame.size.width+2*self.scrollToViewPadding.width, view.frame.size.height+2*self.scrollToViewPadding.height);
-        [self.scrollView scrollRectToVisible:[self.scrollView convertRect:viewFrameWithPadding fromView:view.superview] animated:animated];
+        [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@ is not subview of %@", stringFromVariable(view), NSStringFromSelector(@selector(scrollView))]];
+        return;
     }
-}
-
-- (UIView *)getFirstResponder
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter customCategories:@[AKD_UI] message:nil];
     
-    UIView *firstResponder;
-    NSMutableArray *subviews = [[NSMutableArray alloc] initWithObjects:self.view, nil];
-    do {
-        UIView *subview = [subviews firstObject];
-        if (subview.isFirstResponder) firstResponder = subview;
-        else [subviews addObjectsFromArray:subview.subviews];
-        [subviews removeObject:subview];
-    } while ((!firstResponder) && (subviews.count));
-    return firstResponder;
+    CGRect viewRect = [self.scrollView convertRect:view.frame fromView:view.superview];
+    viewRect = CGRectMake(viewRect.origin.x-self.scrollPadding.width, viewRect.origin.y-self.scrollPadding.height, viewRect.size.width+2*self.scrollPadding.width, viewRect.size.height+2*self.scrollPadding.height);
+    [self.scrollView scrollRectToVisible:viewRect animated:animated];
 }
 
-#pragma mark - // DELEGATED METHODS (UITextFieldDelegate) //
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+- (void)setKeyboardWillAppear:(void (^)(CGRect, NSTimeInterval))keyboardWillAppear
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    if (self.useDefaultKeyboardToolbar)
-    {
-        self.defaultKeyboardToolbar; // this is bad code but necessary to work, needs fix
-        [textField performSelector:@selector(setInputAccessoryView:) withObject:self.defaultKeyboardToolbar];
-    }
-    else if (self.keyboardToolbar)
-    {
-        self.keyboardToolbar; // this is bad code but necessary to work, needs fix
-        [textField performSelector:@selector(setInputAccessoryView:) withObject:self.keyboardToolbar];
-    }
-    return YES;
+    objc_setAssociatedObject(self, @selector(keyboardWillAppear), keyboardWillAppear, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+- (void)setKeyboardDidAppear:(void (^)(CGRect))keyboardDidAppear
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    [self scrollToView:textField animated:YES];
+    objc_setAssociatedObject(self, @selector(keyboardDidAppear), keyboardDidAppear, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+- (void)setKeyboardWillDisappear:(void (^)(NSTimeInterval))keyboardWillDisappear
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    return YES;
+    objc_setAssociatedObject(self, @selector(keyboardWillDisappear), keyboardWillDisappear, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
+- (void)setKeyboardDidDisappear:(void (^)(void))keyboardDidDisappear
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    [textField resignFirstResponder];
+    objc_setAssociatedObject(self, @selector(keyboardDidDisappear), keyboardDidDisappear, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-#pragma mark - // DELEGATED METHODS (UITextViewDelegate) //
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+- (void)setKeyboardFrameWillChange:(void (^)(CGRect, NSTimeInterval))keyboardFrameWillChange
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    if (self.useDefaultKeyboardToolbar)
-    {
-        self.defaultKeyboardToolbar; // this is bad code but necessary to work, needs fix
-        [textView performSelector:@selector(setInputAccessoryView:) withObject:self.defaultKeyboardToolbar];
-    }
-    else if (self.keyboardToolbar)
-    {
-        self.keyboardToolbar; // this is bad code but necessary to work, needs fix
-        [textView performSelector:@selector(setInputAccessoryView:) withObject:self.keyboardToolbar];
-    }
-    return YES;
+    objc_setAssociatedObject(self, @selector(keyboardFrameWillChange), keyboardFrameWillChange, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
+- (void)setKeyboardFrameDidChange:(void (^)(CGRect))keyboardFrameDidChange
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    [self scrollToView:textView animated:YES];
+    objc_setAssociatedObject(self, @selector(keyboardFrameDidChange), keyboardFrameDidChange, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    return YES;
-}
+#pragma mark - // CATEGORY METHODS //
 
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    [textView resignFirstResponder];
-}
-
-#pragma mark - // DELEGATED METHODS (UISearchBarDelegate) //
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    if (self.useDefaultKeyboardToolbar)
-    {
-        self.defaultKeyboardToolbar; // this is bad code but necessary to work, needs fix
-        [searchBar performSelector:@selector(setInputAccessoryView:) withObject:self.defaultKeyboardToolbar];
-    }
-    else if (self.keyboardToolbar)
-    {
-        self.keyboardToolbar; // this is bad code but necessary to work, needs fix
-        [searchBar performSelector:@selector(setInputAccessoryView:) withObject:self.keyboardToolbar];
-    }
-    return YES;
-}
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    [self scrollToView:searchBar animated:YES];
-    [searchBar setShowsCancelButton:YES animated:YES];
-}
-
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    return YES;
-}
-
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
-    
-    [searchBar setShowsCancelButton:NO animated:YES];
-}
-
-#pragma mark - // DELEGATED METHODS (UIScrollViewDelegate) //
+#pragma mark - // DELEGATED METHODS //
 
 #pragma mark - // OVERWRITTEN METHODS //
 
@@ -397,86 +333,96 @@ static char tapGestureRecognizerKey;
 
 - (void)keyboardWillAppear:(NSNotification *)notification
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
-    // keyboard will appear
+    CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    if (self.scrollView)
+    {
+        [self setScrollViewContentInset:self.scrollView.contentInset];
+        [self setScrollViewScrollIndicatorInsets:self.scrollView.scrollIndicatorInsets];
+        CGFloat insetBottom = self.scrollView.frame.size.height-[self.scrollView.superview convertRect:frame fromCoordinateSpace:self.view].origin.y;
+        [UIView animateWithDuration:animationDuration animations:^{
+            [self.scrollView setContentInset:UIEdgeInsetsMake(self.scrollView.contentInset.top, self.scrollView.contentInset.left, insetBottom, self.scrollView.contentInset.right)];
+            [self.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.scrollView.scrollIndicatorInsets.top, self.scrollView.scrollIndicatorInsets.left, insetBottom, self.scrollView.scrollIndicatorInsets.right)];
+        }];
+    }
+    else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
+    
+    [self.view addGestureRecognizer:self.tapGestureRecognizer];
+    
+    if (self.keyboardWillAppear) self.keyboardWillAppear(frame, animationDuration);
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
+    
+    CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
     if (self.scrollView)
     {
-        CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-        CGRect insetFrame = CGRectZero;
-        CGFloat oversize = 0.0;
-        if (UIEdgeInsetsEqualToEdgeInsets(self.scrollViewContentInset, UIEdgeInsetsZero))
-        {
-            [self setScrollViewContentInset:self.scrollView.contentInset];
-            insetFrame = [self.view convertRect:CGRectMake(2*self.scrollView.contentInset.left+self.scrollView.contentOffset.x, 2*self.scrollView.contentInset.top+self.scrollView.contentOffset.y, self.scrollView.frame.size.width-self.scrollView.contentInset.left-self.scrollView.contentInset.right, self.scrollView.frame.size.height-self.scrollView.contentInset.top-self.scrollView.contentInset.bottom) fromView:self.scrollView];
-            oversize = (insetFrame.origin.y+insetFrame.size.height)-(self.view.bounds.size.height-keyboardSize.height+self.scrollView.contentInset.top);
-            if (oversize > 0.0)
-            {
-                [self.scrollView setContentInset:UIEdgeInsetsMake(self.scrollView.contentInset.top, self.scrollView.contentInset.left, self.scrollView.contentInset.bottom+oversize, self.scrollView.contentInset.right)];
-                [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeDebug methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:[NSString stringWithFormat:@"contentInset = (%f, %f, %f, %f)", self.scrollView.contentInset.top, self.scrollView.contentInset.left, self.scrollView.contentInset.bottom, self.scrollView.contentInset.right]];
-            }
-        }
-        if (UIEdgeInsetsEqualToEdgeInsets(self.scrollViewScrollIndicatorInsets, UIEdgeInsetsZero))
-        {
-            [self setScrollViewScrollIndicatorInsets:self.scrollView.scrollIndicatorInsets];
-            insetFrame = [self.view convertRect:CGRectMake(2*self.scrollView.scrollIndicatorInsets.left+self.scrollView.contentOffset.x, 2*self.scrollView.scrollIndicatorInsets.top+self.scrollView.contentOffset.y, self.scrollView.frame.size.width-self.scrollView.scrollIndicatorInsets.left-self.scrollView.scrollIndicatorInsets.right, self.scrollView.frame.size.height-self.scrollView.scrollIndicatorInsets.top-self.scrollView.scrollIndicatorInsets.bottom) fromView:self.scrollView];
-            oversize = (insetFrame.origin.y+insetFrame.size.height)-(self.view.bounds.size.height-keyboardSize.height+self.scrollView.contentInset.top);
-            if (oversize > 0.0)
-            {
-                [self.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.scrollView.scrollIndicatorInsets.top, self.scrollView.scrollIndicatorInsets.left, self.scrollView.scrollIndicatorInsets.bottom+oversize, self.scrollView.scrollIndicatorInsets.right)];
-                [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeDebug methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:[NSString stringWithFormat:@"scrollIndicators = (%f, %f, %f, %f)", self.scrollView.scrollIndicatorInsets.top, self.scrollView.scrollIndicatorInsets.left, self.scrollView.scrollIndicatorInsets.bottom, self.scrollView.scrollIndicatorInsets.right]];
-            }
-        }
-        [self scrollToView:[self getFirstResponder] animated:YES];
-        [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeDebug methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:[NSString stringWithFormat:@"scrollView.frame = (%f, %f, %f, %f)", self.scrollView.frame.origin.x, self.scrollView.frame.origin.y, self.scrollView.frame.size.width, self.scrollView.frame.size.height]];
+        [self scrollToView:[AKGenerics getFirstResponderInView:self.scrollView] animated:YES];
+        [self.scrollView flashScrollIndicators];
     }
-    [self.view addGestureRecognizer:self.tapGestureRecognizer];
+    else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
+    
+    if (self.keyboardDidAppear) self.keyboardDidAppear(frame);
 }
 
 - (void)keyboardWillDisappear:(NSNotification *)notification
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
-    if (self.scrollView)
-    {
-        NSTimeInterval animationDuration = 0.0;
-        [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
-        [UIView animateWithDuration:animationDuration animations:^{
-            [self.scrollView setContentInset:self.scrollViewContentInset];
-        } completion:^(BOOL finished){
-            [self setScrollViewContentInset:UIEdgeInsetsZero];
-        }];
-        [UIView animateWithDuration:animationDuration animations:^{
-            [self.scrollView setScrollIndicatorInsets:self.scrollViewScrollIndicatorInsets];
-        } completion:^(BOOL finished){
-            [self setScrollViewScrollIndicatorInsets:UIEdgeInsetsZero];
-        }];
-    }
+    NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
     [self.view removeGestureRecognizer:self.tapGestureRecognizer];
+    
+    if (self.keyboardWillDisappear) self.keyboardWillDisappear(animationDuration);
 }
 
 - (void)keyboardDidDisappear:(NSNotification *)notification
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
-    // keyboard did disappear
+    if (self.keyboardDidDisappear) self.keyboardDidDisappear();
+}
+
+- (void)keyboardFrameWillChange:(NSNotification *)notification
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
+    
+    CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    if (self.scrollView)
+    {
+        CGFloat insetBottom = self.scrollView.frame.size.height-[self.scrollView.superview convertRect:frame fromCoordinateSpace:self.view].origin.y;
+        [UIView animateWithDuration:animationDuration animations:^{
+            [self.scrollView setContentInset:UIEdgeInsetsMake(self.scrollView.contentInset.top, self.scrollView.contentInset.left, insetBottom, self.scrollView.contentInset.right)];
+            [self.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.scrollView.scrollIndicatorInsets.top, self.scrollView.scrollIndicatorInsets.left, insetBottom, self.scrollView.scrollIndicatorInsets.right)];
+        }];
+    }
+    else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
+    
+    if (self.keyboardFrameWillChange) self.keyboardFrameWillChange(frame, animationDuration);
+}
+
+- (void)keyboardFrameDidChange:(NSNotification *)notification
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
+    
+    CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    if (self.keyboardFrameDidChange) self.keyboardFrameDidChange(frame);
 }
 
 - (void)resignActiveView
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified customCategories:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
-    UIView *activeView = [self getFirstResponder];
-    if (activeView)
-    {
-        [activeView performSelector:@selector(resignFirstResponder)];
-    }
+    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
 }
 
 @end
