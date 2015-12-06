@@ -19,20 +19,17 @@
 
 #define DEFAULT_USE_DEFAULT_TOOLBAR YES
 #define DEFAULT_TOOLBAR_TEXT @"Tap To Dismiss Keyboard"
-#define DEFAULT_TOOLBAR_HEIGHT 20.0f
-
-// iOS 6 //
-
-#define DEFAULT_TOOLBAR_COLOR_IOS_6 [UIColor colorWithRed:87.5f/255.0f green:100.0f/255.0f blue:112.5f/255.0f alpha:1.0f]
-#define DEFAULT_TOOLBAR_FONT_IOS_6 [UIFont boldSystemFontOfSize:12.0f]
-#define DEFAULT_TOOLBAR_TEXT_COLOR_IOS_6 [UIColor whiteColor]
-#define DEFAULT_TOOLBAR_TEXT_SHADOW_COLOR [UIColor colorWithWhite:0.0f alpha:0.66f]
-
-// iOS 7 //
-
-#define DEFAULT_TOOLBAR_COLOR_IOS_7 [UIColor colorWithWhite:0.9 alpha:0.33]
+#define DEFAULT_TOOLBAR_FONT_IOS_6 [UIFont boldSystemFontOfSize:12.0]
 #define DEFAULT_TOOLBAR_FONT_IOS_7 [UIFont systemFontOfSize:12.0]
+#define DEFAULT_TOOLBAR_TEXT_COLOR_IOS_6 [UIColor whiteColor]
 #define DEFAULT_TOOLBAR_TEXT_COLOR_IOS_7 [UIColor blackColor]
+#define DEFAULT_TOOLBAR_TEXT_SHADOW_COLOR [UIColor colorWithWhite:0.0 alpha:0.66]
+#define DEFAULT_TOOLBAR_COLOR_IOS_6 [UIColor colorWithRed:87.5/255.0 green:100.0/255.0 blue:112.5/255.0 alpha:1.0]
+#define DEFAULT_TOOLBAR_COLOR_IOS_7 [UIColor colorWithWhite:0.9 alpha:0.33]
+#define DEFAULT_TOOLBAR_HEIGHT 20.0
+
+#define DEFAULT_SCROLLING_PADDING_HORIZONTAL 0.0
+#define DEFAULT_SCROLLING_PADDING_VERTICAL 5.0
 
 @implementation UIViewController (Keyboard)
 
@@ -52,51 +49,39 @@
     return objc_getAssociatedObject(self, @selector(scrollView));
 }
 
-- (void)setVisibleView:(UIView *)visibleView
+- (void)setKeyboardToolbar:(UIView *)keyboardToolbar
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    objc_setAssociatedObject(self, @selector(visibleView), visibleView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(keyboardToolbar), keyboardToolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIView *)visibleView
+- (UIView *)keyboardToolbar
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-    UIView *visibleView = objc_getAssociatedObject(self, @selector(visibleView));
-    if (visibleView) return visibleView;
-    
-    visibleView = [UIView new];
-    [visibleView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [visibleView setUserInteractionEnabled:NO];
-    [visibleView setBackgroundColor:[UIColor redColor]];
-    [self.view addSubview:visibleView];
-    [self.view sendSubviewToBack:visibleView];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:visibleView attribute:NSLayoutAttributeLeading relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeading multiplier:1.0f constant:0.0f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:visibleView attribute:NSLayoutAttributeTrailing relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTrailing multiplier:1.0f constant:0.0f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:visibleView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.bottomLayoutGuide attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:visibleView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
-    [self setConstraintVisibleViewBottom:bottomConstraint];
-    [self.view addConstraint:bottomConstraint];
-    [self.view layoutSubviews];
-    
-    [self setVisibleView:visibleView];
-    return visibleView;
+    return objc_getAssociatedObject(self, @selector(keyboardToolbar));
 }
 
-- (void)setConstraintVisibleViewBottom:(NSLayoutConstraint *)constraintVisibleViewBottom
+- (void)setScrollPadding:(CGSize)scrollPadding
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
-    objc_setAssociatedObject(self, @selector(constraintVisibleViewBottom), constraintVisibleViewBottom, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(scrollPadding), [NSValue valueWithCGSize:scrollPadding], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSLayoutConstraint *)constraintVisibleViewBottom
+- (CGSize)scrollPadding
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-    return objc_getAssociatedObject(self, @selector(constraintVisibleViewBottom));
+    NSValue *scrollPaddingNSValue = objc_getAssociatedObject(self, @selector(scrollPadding));
+    CGSize scrollPadding = [scrollPaddingNSValue CGSizeValue];
+    if (!scrollPaddingNSValue)
+    {
+        scrollPadding = CGSizeMake(DEFAULT_SCROLLING_PADDING_HORIZONTAL, DEFAULT_SCROLLING_PADDING_VERTICAL);
+        [self setScrollPadding:scrollPadding];
+    }
+    return scrollPadding;
 }
 
 - (void)setUseDefaultKeyboardToolbar:(BOOL)useDefaultKeyboardToolbar
@@ -110,62 +95,84 @@
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-    NSNumber *useDefaultKeyboardToolbar = objc_getAssociatedObject(self, @selector(useDefaultKeyboardToolbar));
-    if (useDefaultKeyboardToolbar) return useDefaultKeyboardToolbar.boolValue;
-    
-    [self setUseDefaultKeyboardToolbar:DEFAULT_USE_DEFAULT_TOOLBAR];
-    return self.useDefaultKeyboardToolbar;
+    NSNumber *useDefaultKeyboardToolbarNSNumber = objc_getAssociatedObject(self, @selector(useDefaultKeyboardToolbar));
+    BOOL useDefaultKeyboardToolbar = [useDefaultKeyboardToolbarNSNumber boolValue];
+    if (!useDefaultKeyboardToolbarNSNumber)
+    {
+        useDefaultKeyboardToolbar = DEFAULT_USE_DEFAULT_TOOLBAR;
+        [self setUseDefaultKeyboardToolbar:useDefaultKeyboardToolbar];
+    }
+    return useDefaultKeyboardToolbar;
 }
 
-- (UIView *)customKeyboardToolbar
+- (void)setScrollViewContentInset:(UIEdgeInsets)scrollViewContentInset
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
+    
+    objc_setAssociatedObject(self, @selector(scrollViewContentInset), [NSValue valueWithUIEdgeInsets:scrollViewContentInset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (UIEdgeInsets)scrollViewContentInset
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-    return objc_getAssociatedObject(self, @selector(customKeyboardToolbar));
+    return [objc_getAssociatedObject(self, @selector(scrollViewContentInset)) UIEdgeInsetsValue];
 }
 
-- (void)setDefaultKeyboardToolbar:(UIToolbar *)defaultKeyboardToolbar
+- (void)setScrollViewScrollIndicatorInsets:(UIEdgeInsets)scrollViewScrollIndicatorInsets
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
+    
+    objc_setAssociatedObject(self, @selector(scrollViewScrollIndicatorInsets), [NSValue valueWithUIEdgeInsets:scrollViewScrollIndicatorInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (UIEdgeInsets)scrollViewScrollIndicatorInsets
+{
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    
+    return [objc_getAssociatedObject(self, @selector(scrollViewScrollIndicatorInsets)) UIEdgeInsetsValue];
+}
+
+- (void)setDefaultKeyboardToolbar:(UIView *)defaultKeyboardToolbar
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
     objc_setAssociatedObject(self, @selector(defaultKeyboardToolbar), defaultKeyboardToolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIToolbar *)defaultKeyboardToolbar
+- (UIView *)defaultKeyboardToolbar
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
-    UIToolbar *defaultKeyboardToolbar = objc_getAssociatedObject(self, @selector(defaultKeyboardToolbar));
-    if (defaultKeyboardToolbar) return defaultKeyboardToolbar;
-    
-    defaultKeyboardToolbar = [UIToolbar new];
-    [defaultKeyboardToolbar addConstraint:[NSLayoutConstraint constraintWithItem:defaultKeyboardToolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:DEFAULT_TOOLBAR_HEIGHT]];
-    [defaultKeyboardToolbar setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [defaultKeyboardToolbar setBackgroundColor:[UIColor clearColor]];
-    UILabel *labelForToolbar = [UILabel new];
-    [labelForToolbar setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [labelForToolbar setText:DEFAULT_TOOLBAR_TEXT];
-    [labelForToolbar setBackgroundColor:[UIColor clearColor]];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0f)
+    UIView *defaultKeyboardToolbar = objc_getAssociatedObject(self, @selector(defaultKeyboardToolbar));
+    if (!defaultKeyboardToolbar)
     {
-        [defaultKeyboardToolbar setTintColor:DEFAULT_TOOLBAR_COLOR_IOS_6];
-        [labelForToolbar setFont:DEFAULT_TOOLBAR_FONT_IOS_6];
-        [labelForToolbar setTextColor:DEFAULT_TOOLBAR_TEXT_COLOR_IOS_6];
-        [labelForToolbar setShadowColor:DEFAULT_TOOLBAR_TEXT_SHADOW_COLOR];
-        [labelForToolbar setShadowOffset:CGSizeMake(labelForToolbar.shadowOffset.width, labelForToolbar.shadowOffset.height/2.0)];
+        UIToolbar *defaultKeyboardToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, self.view.bounds.size.width, DEFAULT_TOOLBAR_HEIGHT)];
+        [defaultKeyboardToolbar setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin)];
+        UILabel *labelForToolbar = [[UILabel alloc] initWithFrame:defaultKeyboardToolbar.bounds];
+        [labelForToolbar setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+        [labelForToolbar setBackgroundColor:[UIColor clearColor]];
+        [labelForToolbar setTextAlignment:NSTextAlignmentCenter];
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0)
+        {
+            [defaultKeyboardToolbar setTintColor:DEFAULT_TOOLBAR_COLOR_IOS_6];
+            [labelForToolbar setFont:DEFAULT_TOOLBAR_FONT_IOS_6];
+            [labelForToolbar setTextColor:DEFAULT_TOOLBAR_TEXT_COLOR_IOS_6];
+            [labelForToolbar setShadowColor:DEFAULT_TOOLBAR_TEXT_SHADOW_COLOR];
+            [labelForToolbar setShadowOffset:CGSizeMake(labelForToolbar.shadowOffset.width, labelForToolbar.shadowOffset.height/2.0)];
+        }
+        else
+        {
+            [defaultKeyboardToolbar setBarTintColor:DEFAULT_TOOLBAR_COLOR_IOS_7];
+            [labelForToolbar setFont:DEFAULT_TOOLBAR_FONT_IOS_7];
+            [labelForToolbar setTextColor:DEFAULT_TOOLBAR_TEXT_COLOR_IOS_7];
+            [defaultKeyboardToolbar setTranslucent:YES];
+        }
+        [labelForToolbar setText:DEFAULT_TOOLBAR_TEXT];
+        [defaultKeyboardToolbar addSubview:labelForToolbar];
+        [defaultKeyboardToolbar addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignActiveView)]];
+        [self setDefaultKeyboardToolbar:defaultKeyboardToolbar];
     }
-    else
-    {
-        [defaultKeyboardToolbar setTintColor:DEFAULT_TOOLBAR_COLOR_IOS_7];
-        [defaultKeyboardToolbar setTranslucent:YES];
-        [labelForToolbar setFont:DEFAULT_TOOLBAR_FONT_IOS_7];
-        [labelForToolbar setTextColor:DEFAULT_TOOLBAR_TEXT_COLOR_IOS_7];
-    }
-    [defaultKeyboardToolbar addSubview:labelForToolbar];
-    [defaultKeyboardToolbar addConstraint:[NSLayoutConstraint constraintWithItem:labelForToolbar attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:defaultKeyboardToolbar attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-    [defaultKeyboardToolbar addConstraint:[NSLayoutConstraint constraintWithItem:labelForToolbar attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:defaultKeyboardToolbar attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-    [defaultKeyboardToolbar addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignActiveView)]];
-    [self setDefaultKeyboardToolbar:defaultKeyboardToolbar];
     return defaultKeyboardToolbar;
 }
 
@@ -181,10 +188,11 @@
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
     UITapGestureRecognizer *tapGestureRecognizer = objc_getAssociatedObject(self, @selector(tapGestureRecognizer));
-    if (tapGestureRecognizer) return tapGestureRecognizer;
-    
-    tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignActiveView)];
-    [self setTapGestureRecognizer:tapGestureRecognizer];
+    if (!tapGestureRecognizer)
+    {
+        tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignActiveView)];
+        [self setTapGestureRecognizer:tapGestureRecognizer];
+    }
     return tapGestureRecognizer;
 }
 
@@ -258,33 +266,19 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidChangeFrameNotification object:nil];
 }
 
-- (void)setCustomKeyboardToolbar:(UIView *)customKeyboardToolbar
+- (void)scrollToView:(UIView *)view animated:(BOOL)animated
 {
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
+    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
-    objc_setAssociatedObject(self, @selector(customKeyboardToolbar), customKeyboardToolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (UIView *)keyboardToolbar
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
+    if (![AKGenerics view:view isEventualSubviewOfView:self.scrollView])
+    {
+        [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@ is not subview of %@", stringFromVariable(view), NSStringFromSelector(@selector(scrollView))]];
+        return;
+    }
     
-    UIView *keyboardToolbar = self.customKeyboardToolbar;
-    if (!keyboardToolbar) keyboardToolbar = self.defaultKeyboardToolbar;
-    return keyboardToolbar;
-}
-
-- (void)updateInsets
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetup tags:@[AKD_UI] message:nil];
-    
-    CGRect rect = [self.scrollView.superview convertRect:self.visibleView.frame fromView:self.visibleView.superview];
-    UIEdgeInsets insets = UIEdgeInsetsMake(rect.origin.y-self.scrollView.frame.origin.y, rect.origin.x-self.scrollView.frame.origin.x, (self.scrollView.frame.origin.y+self.scrollView.frame.size.height)-(rect.origin.y+rect.size.height), (self.scrollView.frame.origin.x+self.scrollView.frame.size.width)-(rect.origin.x+rect.size.width));
-    
-    [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x+self.scrollView.contentInset.left-insets.left, self.scrollView.contentOffset.y+self.scrollView.contentInset.top-insets.top)];
-    
-    [self.scrollView setContentInset:insets];
-    [self.scrollView setScrollIndicatorInsets:insets];
+    CGRect viewRect = [self.scrollView convertRect:view.frame fromView:view.superview];
+    viewRect = CGRectMake(viewRect.origin.x-self.scrollPadding.width, viewRect.origin.y-self.scrollPadding.height, viewRect.size.width+2*self.scrollPadding.width, viewRect.size.height+2*self.scrollPadding.height);
+    [self.scrollView scrollRectToVisible:viewRect animated:animated];
 }
 
 - (void)setKeyboardWillAppear:(void (^)(CGRect, NSTimeInterval))keyboardWillAppear
@@ -344,6 +338,18 @@
     CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
+    if (self.scrollView)
+    {
+        [self setScrollViewContentInset:self.scrollView.contentInset];
+        [self setScrollViewScrollIndicatorInsets:self.scrollView.scrollIndicatorInsets];
+        CGFloat insetBottom = self.scrollView.frame.size.height-[self.scrollView.superview convertRect:frame fromCoordinateSpace:self.view].origin.y;
+        [UIView animateWithDuration:animationDuration animations:^{
+            [self.scrollView setContentInset:UIEdgeInsetsMake(self.scrollView.contentInset.top, self.scrollView.contentInset.left, insetBottom, self.scrollView.contentInset.right)];
+            [self.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.scrollView.scrollIndicatorInsets.top, self.scrollView.scrollIndicatorInsets.left, insetBottom, self.scrollView.scrollIndicatorInsets.right)];
+        }];
+    }
+    else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
+    
     [self.view addGestureRecognizer:self.tapGestureRecognizer];
     
     if (self.keyboardWillAppear) self.keyboardWillAppear(frame, animationDuration);
@@ -357,6 +363,7 @@
     
     if (self.scrollView)
     {
+        [self scrollToView:[AKGenerics getFirstResponderInView:self.scrollView] animated:YES];
         [self.scrollView flashScrollIndicators];
     }
     else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
@@ -371,13 +378,6 @@
     NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
     [self.view removeGestureRecognizer:self.tapGestureRecognizer];
-    
-    [self.constraintVisibleViewBottom setConstant:0.0f];
-    [self.view layoutSubviews];
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.view layoutIfNeeded];
-        [self updateInsets];
-    }];
     
     if (self.keyboardWillDisappear) self.keyboardWillDisappear(animationDuration);
 }
@@ -396,12 +396,15 @@
     CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
-    [self.constraintVisibleViewBottom setConstant:frame.size.height];
-    [self.view layoutSubviews];
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.view layoutIfNeeded];
-        [self updateInsets];
-    }];
+    if (self.scrollView)
+    {
+        CGFloat insetBottom = self.scrollView.frame.size.height-[self.scrollView.superview convertRect:frame fromCoordinateSpace:self.view].origin.y;
+        [UIView animateWithDuration:animationDuration animations:^{
+            [self.scrollView setContentInset:UIEdgeInsetsMake(self.scrollView.contentInset.top, self.scrollView.contentInset.left, insetBottom, self.scrollView.contentInset.right)];
+            [self.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(self.scrollView.scrollIndicatorInsets.top, self.scrollView.scrollIndicatorInsets.left, insetBottom, self.scrollView.scrollIndicatorInsets.right)];
+        }];
+    }
+    else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
     
     if (self.keyboardFrameWillChange) self.keyboardFrameWillChange(frame, animationDuration);
 }

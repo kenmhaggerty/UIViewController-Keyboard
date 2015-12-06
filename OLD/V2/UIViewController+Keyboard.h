@@ -18,14 +18,12 @@
 
 @interface UIViewController (Keyboard)
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) IBOutlet UIView *visibleView;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint *constraintVisibleViewBottom;
+@property (nonatomic, strong) UIView *keyboardToolbar;
+@property (nonatomic) CGSize scrollPadding;
 @property (nonatomic) BOOL useDefaultKeyboardToolbar;
 - (void)addObserversToKeyboard;
 - (void)removeObserversFromKeyboard;
-- (void)setCustomKeyboardToolbar:(UIView *)customKeyboardToolbar;
-- (UIView *)keyboardToolbar;
-- (void)updateInsets;
+- (void)scrollToView:(UIView *)view animated:(BOOL)animated;
 
 - (void)setKeyboardWillAppear:(void (^)(CGRect, NSTimeInterval))keyboardWillAppear;
 - (void)setKeyboardDidAppear:(void (^)(CGRect))keyboardDidAppear;
