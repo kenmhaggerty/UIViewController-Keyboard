@@ -69,7 +69,7 @@
     visibleView = [UIView new];
     [visibleView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [visibleView setUserInteractionEnabled:NO];
-    [visibleView setBackgroundColor:[UIColor redColor]];
+    [visibleView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:visibleView];
     [self.view sendSubviewToBack:visibleView];
     
