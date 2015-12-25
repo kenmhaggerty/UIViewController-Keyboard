@@ -216,13 +216,6 @@
     return objc_getAssociatedObject(self, @selector(keyboardDidDisappear));
 }
 
-<<<<<<< HEAD
-#pragma mark - // DELEGATED METHODS (UITextFieldDelegate) //
-
-#pragma mark - // DELEGATED METHODS (UITextViewDelegate) //
-
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-=======
 - (void (^)(CGRect, NSTimeInterval))keyboardFrameWillChange
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
@@ -266,7 +259,6 @@
 }
 
 - (void)setCustomKeyboardToolbar:(UIView *)customKeyboardToolbar
->>>>>>> 5f921024395c6e60fee0e2896160fd44a331170a
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
