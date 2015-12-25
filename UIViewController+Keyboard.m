@@ -270,8 +270,6 @@ static char tapGestureRecognizerKey;
 
 #pragma mark - // DELEGATED METHODS (UITextFieldDelegate) //
 
-s
-
 #pragma mark - // DELEGATED METHODS (UITextViewDelegate) //
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView
@@ -411,7 +409,7 @@ s
     {
         NSTimeInterval animationDuration = 0.0;
         [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
-        [UIView animateWithDuration:animationDuration animation s:^{
+        [UIView animateWithDuration:animationDuration animations:^{
             [self.scrollView setContentInset:self.scrollViewContentInset];
         } completion:^(BOOL finished){
             [self setScrollViewContentInset:UIEdgeInsetsZero];
