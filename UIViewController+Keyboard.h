@@ -21,11 +21,21 @@
 @property (nonatomic, strong) IBOutlet UIView *visibleView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *constraintVisibleViewBottom;
 @property (nonatomic) BOOL useDefaultKeyboardToolbar;
+
+// SETUP //
+
 - (void)addObserversToKeyboard;
 - (void)removeObserversFromKeyboard;
+
+// SETTERS //
+
 - (void)setCustomKeyboardToolbar:(UIView *)customKeyboardToolbar;
+
+// GETTERS //
+
 - (UIView *)keyboardToolbar;
-- (void)updateInsets;
+
+// BLOCKS //
 
 - (void)setKeyboardWillAppear:(void (^)(CGRect, NSTimeInterval))keyboardWillAppear;
 - (void)setKeyboardDidAppear:(void (^)(CGRect))keyboardDidAppear;
@@ -33,5 +43,9 @@
 - (void)setKeyboardDidDisappear:(void (^)(void))keyboardDidDisappear;
 - (void)setKeyboardFrameWillChange:(void (^)(CGRect, NSTimeInterval))keyboardFrameDidChange;
 - (void)setKeyboardFrameDidChange:(void (^)(CGRect))keyboardFrameDidChange;
+
+// OTHER //
+
+- (void)updateInsets;
 
 @end
