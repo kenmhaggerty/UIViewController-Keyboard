@@ -14,9 +14,19 @@
 
 #pragma mark - // PROTOCOLS //
 
+@protocol UIKeyboardDelegate <NSObject>
+@optional
+- (void)keyboardWillAppearWithFrame:(CGRect)frame animationDuration:(NSTimeInterval)animationDuration;
+- (void)keyboardDidAppearWithFrame:(CGRect)frame;
+- (void)keyboardWillDisappearWithAnimationDuration:(NSTimeInterval)animationDuration;
+- (void)keyboardDidDisappear;
+- (void)keyboardFrameWillChangeWithFrame:(CGRect)frame animationDuration:(NSTimeInterval)animationDuration;
+- (void)keyboardFrameDidChangeWithFrame:(CGRect)frame;
+@end
+
 #pragma mark - // DEFINITIONS (Public) //
 
-@interface UIViewController (Keyboard)
+@interface UIViewController (Keyboard) <UIKeyboardDelegate>
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UIView *visibleView;
 @property (nonatomic, strong) IBOutlet NSLayoutConstraint *constraintVisibleViewBottom;

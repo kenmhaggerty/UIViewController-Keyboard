@@ -280,6 +280,9 @@
     
     [self.view addGestureRecognizer:self.tapGestureRecognizer];
     
+    if ([self respondsToSelector:@selector(keyboardWillAppearWithFrame:animationDuration:)]) {
+        [self keyboardWillAppearWithFrame:frame animationDuration:animationDuration];
+    }
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification
@@ -294,6 +297,9 @@
     }
     else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
     
+    if ([self respondsToSelector:@selector(keyboardDidAppearWithFrame:)]) {
+        [self keyboardDidAppearWithFrame:frame];
+    }
 }
 
 - (void)keyboardWillDisappear:(NSNotification *)notification
@@ -311,12 +317,18 @@
         [self updateInsets];
     }];
     
+    if ([self respondsToSelector:@selector(keyboardWillDisappearWithAnimationDuration:)]) {
+        [self keyboardWillDisappearWithAnimationDuration:animationDuration];
+    }
 }
 
 - (void)keyboardDidDisappear:(NSNotification *)notification
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
+    if ([self respondsToSelector:@selector(keyboardDidDisappear)]) {
+        [self keyboardDidDisappear];
+    }
 }
 
 - (void)keyboardFrameWillChange:(NSNotification *)notification
@@ -333,6 +345,9 @@
         [self updateInsets];
     }];
     
+    if ([self respondsToSelector:@selector(keyboardFrameWillChangeWithFrame:animationDuration:)]) {
+        [self keyboardFrameWillChangeWithFrame:frame animationDuration:animationDuration];
+    }
 }
 
 - (void)keyboardFrameDidChange:(NSNotification *)notification
@@ -341,6 +356,9 @@
     
     CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
+    if ([self respondsToSelector:@selector(keyboardFrameDidChangeWithFrame:)]) {
+        [self keyboardFrameDidChangeWithFrame:frame];
+    }
 }
 
 - (void)resignActiveView
