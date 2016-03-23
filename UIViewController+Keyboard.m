@@ -38,29 +38,25 @@
 
 #pragma mark - // SETTERS AND GETTERS //
 
-- (void)setScrollView:(UIScrollView *)scrollView
-{
+- (void)setScrollView:(UIScrollView *)scrollView {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
     objc_setAssociatedObject(self, @selector(scrollView), scrollView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIScrollView *)scrollView
-{
+- (UIScrollView *)scrollView {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
     return objc_getAssociatedObject(self, @selector(scrollView));
 }
 
-- (void)setVisibleView:(UIView *)visibleView
-{
+- (void)setVisibleView:(UIView *)visibleView {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
     objc_setAssociatedObject(self, @selector(visibleView), visibleView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIView *)visibleView
-{
+- (UIView *)visibleView {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
     UIView *visibleView = objc_getAssociatedObject(self, @selector(visibleView));
@@ -99,40 +95,37 @@
     return objc_getAssociatedObject(self, @selector(constraintVisibleViewBottom));
 }
 
-- (void)setUseDefaultKeyboardToolbar:(BOOL)useDefaultKeyboardToolbar
-{
+- (void)setUseDefaultKeyboardToolbar:(BOOL)useDefaultKeyboardToolbar {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
     objc_setAssociatedObject(self, @selector(useDefaultKeyboardToolbar), [NSNumber numberWithBool:useDefaultKeyboardToolbar], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)useDefaultKeyboardToolbar
-{
+- (BOOL)useDefaultKeyboardToolbar {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
     NSNumber *useDefaultKeyboardToolbar = objc_getAssociatedObject(self, @selector(useDefaultKeyboardToolbar));
-    if (useDefaultKeyboardToolbar) return useDefaultKeyboardToolbar.boolValue;
+    if (useDefaultKeyboardToolbar) {
+        return useDefaultKeyboardToolbar.boolValue;
+    }
     
     [self setUseDefaultKeyboardToolbar:DEFAULT_USE_DEFAULT_TOOLBAR];
     return self.useDefaultKeyboardToolbar;
 }
 
-- (UIView *)customKeyboardToolbar
-{
+- (UIView *)customKeyboardToolbar {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
     return objc_getAssociatedObject(self, @selector(customKeyboardToolbar));
 }
 
-- (void)setDefaultKeyboardToolbar:(UIToolbar *)defaultKeyboardToolbar
-{
+- (void)setDefaultKeyboardToolbar:(UIToolbar *)defaultKeyboardToolbar {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
     objc_setAssociatedObject(self, @selector(defaultKeyboardToolbar), defaultKeyboardToolbar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIToolbar *)defaultKeyboardToolbar
-{
+- (UIToolbar *)defaultKeyboardToolbar {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
     UIToolbar *defaultKeyboardToolbar = objc_getAssociatedObject(self, @selector(defaultKeyboardToolbar));
@@ -146,16 +139,14 @@
     [labelForToolbar setTranslatesAutoresizingMaskIntoConstraints:NO];
     [labelForToolbar setText:DEFAULT_TOOLBAR_TEXT];
     [labelForToolbar setBackgroundColor:[UIColor clearColor]];
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0f)
-    {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0f) {
         [defaultKeyboardToolbar setTintColor:DEFAULT_TOOLBAR_COLOR_IOS_6];
         [labelForToolbar setFont:DEFAULT_TOOLBAR_FONT_IOS_6];
         [labelForToolbar setTextColor:DEFAULT_TOOLBAR_TEXT_COLOR_IOS_6];
         [labelForToolbar setShadowColor:DEFAULT_TOOLBAR_TEXT_SHADOW_COLOR];
         [labelForToolbar setShadowOffset:CGSizeMake(labelForToolbar.shadowOffset.width, labelForToolbar.shadowOffset.height/2.0)];
     }
-    else
-    {
+    else {
         [defaultKeyboardToolbar setTintColor:DEFAULT_TOOLBAR_COLOR_IOS_7];
         [defaultKeyboardToolbar setTranslucent:YES];
         [labelForToolbar setFont:DEFAULT_TOOLBAR_FONT_IOS_7];
@@ -169,15 +160,13 @@
     return defaultKeyboardToolbar;
 }
 
-- (void)setTapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer
-{
+- (void)setTapGestureRecognizer:(UITapGestureRecognizer *)tapGestureRecognizer {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
     
     objc_setAssociatedObject(self, @selector(tapGestureRecognizer), tapGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UITapGestureRecognizer *)tapGestureRecognizer
-{
+- (UITapGestureRecognizer *)tapGestureRecognizer {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
     
     UITapGestureRecognizer *tapGestureRecognizer = objc_getAssociatedObject(self, @selector(tapGestureRecognizer));
@@ -192,8 +181,7 @@
 
 #pragma mark - // PUBLIC METHODS //
 
-- (void)addObserversToKeyboard
-{
+- (void)addObserversToKeyboard {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
@@ -204,8 +192,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardFrameDidChange:) name:UIKeyboardDidChangeFrameNotification object:nil];
 }
 
-- (void)removeObserversFromKeyboard
-{
+- (void)removeObserversFromKeyboard {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
@@ -271,8 +258,7 @@
 
 #pragma mark - // PRIVATE METHODS //
 
-- (void)keyboardWillAppear:(NSNotification *)notification
-{
+- (void)keyboardWillAppear:(NSNotification *)notification {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
     CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -285,14 +271,12 @@
     }
 }
 
-- (void)keyboardDidAppear:(NSNotification *)notification
-{
+- (void)keyboardDidAppear:(NSNotification *)notification {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
     CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    if (self.scrollView)
-    {
+    if (self.scrollView) {
         [self.scrollView flashScrollIndicators];
     }
     else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
@@ -302,8 +286,7 @@
     }
 }
 
-- (void)keyboardWillDisappear:(NSNotification *)notification
-{
+- (void)keyboardWillDisappear:(NSNotification *)notification {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:nil];
     
     NSTimeInterval animationDuration = [[notification.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
@@ -322,8 +305,7 @@
     }
 }
 
-- (void)keyboardDidDisappear:(NSNotification *)notification
-{
+- (void)keyboardDidDisappear:(NSNotification *)notification {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
     if ([self respondsToSelector:@selector(keyboardDidDisappear)]) {
@@ -331,8 +313,7 @@
     }
 }
 
-- (void)keyboardFrameWillChange:(NSNotification *)notification
-{
+- (void)keyboardFrameWillChange:(NSNotification *)notification {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
     CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -350,8 +331,7 @@
     }
 }
 
-- (void)keyboardFrameDidChange:(NSNotification *)notification
-{
+- (void)keyboardFrameDidChange:(NSNotification *)notification {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
     CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
