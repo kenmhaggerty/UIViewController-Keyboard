@@ -28,25 +28,17 @@
 
 @interface UIViewController (Keyboard) <UIKeyboardDelegate>
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, strong) IBOutlet UIView *visibleView;
-@property (nonatomic, strong) IBOutlet NSLayoutConstraint *constraintVisibleViewBottom;
+@property (nonatomic, strong) UIView *keyboardToolbar;
 @property (nonatomic) BOOL useDefaultKeyboardToolbar;
+@property (nonatomic, readonly) BOOL keyboardIsVisible;
 
 // SETUP //
 
 - (void)addObserversToKeyboard;
 - (void)removeObserversFromKeyboard;
 
-// SETTERS //
-
-- (void)setCustomKeyboardToolbar:(UIView *)customKeyboardToolbar;
-
-// GETTERS //
-
-- (UIView *)keyboardToolbar;
-
 // OTHER //
 
-- (void)updateInsets;
+- (void)adjustForStatusBarHeight:(CGFloat)statusBarHeight;
 
 @end
