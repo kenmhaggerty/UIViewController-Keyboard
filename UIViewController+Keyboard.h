@@ -35,15 +35,6 @@
 
 - (UIView *)keyboardToolbar;
 
-// BLOCKS //
-
-- (void)setKeyboardWillAppear:(void (^)(CGRect, NSTimeInterval))keyboardWillAppear;
-- (void)setKeyboardDidAppear:(void (^)(CGRect))keyboardDidAppear;
-- (void)setKeyboardWillDisappear:(void (^)(NSTimeInterval))keyboardWillDisappear;
-- (void)setKeyboardDidDisappear:(void (^)(void))keyboardDidDisappear;
-- (void)setKeyboardFrameWillChange:(void (^)(CGRect, NSTimeInterval))keyboardFrameDidChange;
-- (void)setKeyboardFrameDidChange:(void (^)(CGRect))keyboardFrameDidChange;
-
 // OTHER //
 
 - (void)updateInsets;

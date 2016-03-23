@@ -188,48 +188,6 @@
     return tapGestureRecognizer;
 }
 
-- (void (^)(CGRect, NSTimeInterval))keyboardWillAppear
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
-    
-    return objc_getAssociatedObject(self, @selector(keyboardWillAppear));
-}
-
-- (void (^)(CGRect))keyboardDidAppear
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
-    
-    return objc_getAssociatedObject(self, @selector(keyboardDidAppear));
-}
-
-- (void (^)(NSTimeInterval))keyboardWillDisappear
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
-    
-    return objc_getAssociatedObject(self, @selector(keyboardWillDisappear));
-}
-
-- (void (^)(void))keyboardDidDisappear
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
-    
-    return objc_getAssociatedObject(self, @selector(keyboardDidDisappear));
-}
-
-- (void (^)(CGRect, NSTimeInterval))keyboardFrameWillChange
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
-    
-    return objc_getAssociatedObject(self, @selector(keyboardFrameWillChange));
-}
-
-- (void (^)(CGRect))keyboardFrameDidChange
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeGetter tags:@[AKD_UI] message:nil];
-    
-    return objc_getAssociatedObject(self, @selector(keyboardFrameDidChange));
-}
-
 #pragma mark - // INITS AND LOADS //
 
 #pragma mark - // PUBLIC METHODS //
@@ -287,33 +245,9 @@
     [self.scrollView setScrollIndicatorInsets:insets];
 }
 
-- (void)setKeyboardWillAppear:(void (^)(CGRect, NSTimeInterval))keyboardWillAppear
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
-    
-    objc_setAssociatedObject(self, @selector(keyboardWillAppear), keyboardWillAppear, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
 
-- (void)setKeyboardDidAppear:(void (^)(CGRect))keyboardDidAppear
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
-    
-    objc_setAssociatedObject(self, @selector(keyboardDidAppear), keyboardDidAppear, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
 
-- (void)setKeyboardWillDisappear:(void (^)(NSTimeInterval))keyboardWillDisappear
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
-    
-    objc_setAssociatedObject(self, @selector(keyboardWillDisappear), keyboardWillDisappear, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
 
-- (void)setKeyboardDidDisappear:(void (^)(void))keyboardDidDisappear
-{
-    [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeSetter tags:@[AKD_UI] message:nil];
-    
-    objc_setAssociatedObject(self, @selector(keyboardDidDisappear), keyboardDidDisappear, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
 
 - (void)setKeyboardFrameWillChange:(void (^)(CGRect, NSTimeInterval))keyboardFrameWillChange
 {
@@ -346,7 +280,6 @@
     
     [self.view addGestureRecognizer:self.tapGestureRecognizer];
     
-    if (self.keyboardWillAppear) self.keyboardWillAppear(frame, animationDuration);
 }
 
 - (void)keyboardDidAppear:(NSNotification *)notification
@@ -361,7 +294,6 @@
     }
     else [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeNotice methodType:AKMethodTypeUnspecified tags:@[AKD_UI] message:[NSString stringWithFormat:@"%@.%@ is nil", stringFromVariable(self), NSStringFromSelector(@selector(scrollView))]];
     
-    if (self.keyboardDidAppear) self.keyboardDidAppear(frame);
 }
 
 - (void)keyboardWillDisappear:(NSNotification *)notification
@@ -379,14 +311,12 @@
         [self updateInsets];
     }];
     
-    if (self.keyboardWillDisappear) self.keyboardWillDisappear(animationDuration);
 }
 
 - (void)keyboardDidDisappear:(NSNotification *)notification
 {
     [AKDebugger logMethod:METHOD_NAME logType:AKLogTypeMethodName methodType:AKMethodTypeUnspecified tags:@[AKD_NOTIFICATION_CENTER, AKD_UI] message:nil];
     
-    if (self.keyboardDidDisappear) self.keyboardDidDisappear();
 }
 
 - (void)keyboardFrameWillChange:(NSNotification *)notification
@@ -403,7 +333,6 @@
         [self updateInsets];
     }];
     
-    if (self.keyboardFrameWillChange) self.keyboardFrameWillChange(frame, animationDuration);
 }
 
 - (void)keyboardFrameDidChange:(NSNotification *)notification
@@ -412,7 +341,6 @@
     
     CGRect frame = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    if (self.keyboardFrameDidChange) self.keyboardFrameDidChange(frame);
 }
 
 - (void)resignActiveView
